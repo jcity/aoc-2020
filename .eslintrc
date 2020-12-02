@@ -1,0 +1,55 @@
+{
+    "root": true,
+    "env": {
+      "jest": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "project": "./tsconfig.json"
+    },
+    "plugins": [
+      "@typescript-eslint",
+      "import",
+      "prettier",
+      "sort-keys-fix",
+      "typescript-sort-keys"
+    ],
+    "extends": [
+      "airbnb-typescript",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:import/typescript",
+      "prettier"
+    ],
+    "rules": {
+      "import/extensions": [2, "never", {
+        "css": "always"
+      }],
+      "import/order": [2, {
+          "groups": [
+            "builtin",
+            "external",
+            "internal",
+            "sibling",
+            "parent",
+            "index",
+            "object",
+            "unknown"
+          ],
+          "newlines-between": "always",
+          "pathGroups": [
+            {
+              "pattern": "~/pages/**",
+              "group": "sibling"
+            }
+          ]
+        }
+      ],
+      "import/prefer-default-export": 0,
+      "prettier/prettier": 2,
+      "sort-keys-fix/sort-keys-fix": [2, "asc", { "caseSensitive": true }],
+      "typescript-sort-keys/interface": "error",
+      "typescript-sort-keys/string-enum": "error",
+      "@typescript-eslint/explicit-module-boundary-types": 0,
+    }
+  }
