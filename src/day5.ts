@@ -16,7 +16,7 @@ const partitioner = (rule: string, lowerChar: string, lowest: number, highest: n
   return rule[rule.length - 1] === lowerChar ? low : high;
 };
 
-const part1 = INPUT.map(([rowString, seatString]: string[]) => ({
+const sortedTickets = INPUT.map(([rowString, seatString]: string[]) => ({
   row: partitioner(rowString, LOWER_ROW, 0, NUM_ROWS - 1),
   seat: partitioner(seatString, LOWER_SEAT, 0, NUM_SEATS - 1),
 }))
@@ -25,6 +25,14 @@ const part1 = INPUT.map(([rowString, seatString]: string[]) => ({
     seat,
     seatId: row * 8 + seat,
   }))
-  .reduce((highestTicket, nextTicket) => (highestTicket.seatId > nextTicket.seatId ? highestTicket : nextTicket));
+  .sort((left, right) => {
+    if (left.seatId > right.seatId) return -1;
+    if (left.seatId < right.seatId) return 1;
+    return 0;
+  });
+
+const part1 = sortedTickets[0];
+const part2 = sortedTickets.find(({ seatId }, idx) => seatId !== sortedTickets[idx + 1].seatId + 1);
 
 console.log(`Part 1 Solution: ${part1.seatId}`);
+console.log(`Part 2 Solution: ${part2.seatId - 1}`);
