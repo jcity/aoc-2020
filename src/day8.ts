@@ -44,4 +44,24 @@ const part1 = (instructions: { amt: number; cmd: string }[]) => {
   return { accumulator, causedInfinite, marker, pos };
 };
 
+const part2 = (instructions: { amt: number; cmd: string }[]) => {
+  for (let i = 0; i < instructions.length; i++) {
+    const { cmd, amt } = instructions[i];
+    if (cmd === 'acc') continue;
+
+    const newIns = [...instructions];
+    if (cmd === 'nop') {
+      newIns[i] = { amt, cmd: 'jmp' };
+    } else {
+      newIns[i] = { amt, cmd: 'nop' };
+    }
+
+    const stopped = part1(newIns);
+    if (stopped.pos === instructions.length) {
+      return stopped;
+    }
+  }
+};
+
 console.log(`Part 1 Solution: ${part1(parsedInstructions).accumulator}`);
+console.log(`Part 2 Solution: ${part2(parsedInstructions).accumulator}`);
